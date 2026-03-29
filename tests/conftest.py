@@ -9,7 +9,6 @@ import pytest
 from pagemon.models import CheckResult, CheckStatus, Snapshot, Target
 from pagemon.storage import Storage
 
-
 SAMPLE_HTML_V1 = """
 <html>
 <head><title>Test Page</title></head>

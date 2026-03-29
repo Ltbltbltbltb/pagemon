@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import pytest
-
 from pagemon.diff import (
     _normalize,
     _strip_tags,
@@ -11,7 +9,6 @@ from pagemon.diff import (
     compute_diff,
     has_meaningful_change,
 )
-
 
 # ---------------------------------------------------------------------------
 # clean_content
@@ -70,12 +67,7 @@ class TestCleanContent:
         assert "Content without body tag" in result
 
     def test_should_extract_multiple_selector_matches(self) -> None:
-        html = (
-            "<html><body>"
-            "<p class='item'>First</p>"
-            "<p class='item'>Second</p>"
-            "</body></html>"
-        )
+        html = "<html><body><p class='item'>First</p><p class='item'>Second</p></body></html>"
         result = clean_content(html, selector=".item")
         assert "First" in result
         assert "Second" in result

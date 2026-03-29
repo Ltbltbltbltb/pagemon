@@ -9,7 +9,6 @@ import pytest
 from pagemon.models import Snapshot, Target
 from pagemon.storage import Storage
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

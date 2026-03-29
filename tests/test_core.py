@@ -11,7 +11,6 @@ import pytest
 from pagemon.core import PageMon
 from pagemon.models import CheckStatus, Snapshot, Target
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
@@ -160,7 +159,7 @@ class TestPageMonCheckNew:
         engine = make_engine(tmp_db)
         target = engine.add("https://example.com")
         with patch.object(engine, "_fetch", return_value=HTML_V1):
-            result = engine.check(target)
+            engine.check(target)
         snapshot = engine.storage.get_latest_snapshot(target.id)
         engine.close()
         assert snapshot is not None
@@ -382,7 +381,7 @@ class TestPageMonGetHistory:
             with patch.object(engine, "_fetch", return_value=html):
                 engine.check(target)
                 # Force each check to store by clearing hash cache
-                snap = engine.storage.get_latest_snapshot(target.id)
+                engine.storage.get_latest_snapshot(target.id)
                 # Directly add more snapshots
         # Add additional snapshots directly
         for i in range(5):
@@ -393,7 +392,7 @@ class TestPageMonGetHistory:
                     content=c,
                     content_hash=Snapshot.hash_content(c),
                     status_code=200,
-                    timestamp=f"2024-0{i+1}-01T00:00:00",
+                    timestamp=f"2024-0{i + 1}-01T00:00:00",
                 )
             )
         result = engine.get_history("https://example.com", limit=3)

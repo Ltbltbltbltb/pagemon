@@ -4,10 +4,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
-import pytest
-
 from pagemon.models import CheckResult, CheckStatus, Snapshot, Target
-
 
 # ---------------------------------------------------------------------------
 # Target
@@ -91,7 +88,9 @@ class TestSnapshot:
 
     def test_should_preserve_timestamp_when_explicitly_provided(self) -> None:
         ts = "2024-01-01T12:00:00"
-        snap = Snapshot(target_id=1, content="hello", content_hash="abc", status_code=200, timestamp=ts)
+        snap = Snapshot(
+            target_id=1, content="hello", content_hash="abc", status_code=200, timestamp=ts
+        )
         assert snap.timestamp == ts
 
     def test_should_have_none_id_before_persistence(self) -> None:
@@ -106,6 +105,7 @@ class TestSnapshot:
         result = Snapshot.hash_content("hello")
         # sha256("hello") is known
         import hashlib
+
         expected = hashlib.sha256("hello".encode()).hexdigest()
         assert result == expected
 

@@ -187,7 +187,9 @@ class TestCliList:
 
 
 class TestCliCheck:
-    def test_should_print_no_targets_message_when_checking_all_with_none(self, tmp_db: Path) -> None:
+    def test_should_print_no_targets_message_when_checking_all_with_none(
+        self, tmp_db: Path
+    ) -> None:
         runner = make_runner()
         result = runner.invoke(cli, ["check", "--all", "--db", str(tmp_db)])
         assert "No targets" in result.output
@@ -236,9 +238,7 @@ class TestCliCheck:
             mock_resp.raise_for_status = MagicMock()
             mock_client.get = MagicMock(return_value=mock_resp)
             mock_client_cls.return_value = mock_client
-            result = runner.invoke(
-                cli, ["check", "--all", "--json", "--db", str(tmp_db)]
-            )
+            result = runner.invoke(cli, ["check", "--all", "--json", "--db", str(tmp_db)])
         parsed = json.loads(result.output)
         assert isinstance(parsed, list)
 
@@ -255,9 +255,7 @@ class TestCliCheck:
             mock_resp.raise_for_status = MagicMock()
             mock_client.get = MagicMock(return_value=mock_resp)
             mock_client_cls.return_value = mock_client
-            result = runner.invoke(
-                cli, ["check", "--all", "--json", "--db", str(tmp_db)]
-            )
+            result = runner.invoke(cli, ["check", "--all", "--json", "--db", str(tmp_db)])
         parsed = json.loads(result.output)
         assert "status" in parsed[0]
 
