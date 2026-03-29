@@ -102,6 +102,7 @@ class TestAddTarget:
     def test_should_raise_when_duplicate_url_added(self, storage: Storage) -> None:
         storage.add_target(make_target("https://example.com"))
         import sqlite3
+
         with pytest.raises(sqlite3.IntegrityError):
             storage.add_target(make_target("https://example.com"))
 
@@ -302,7 +303,7 @@ class TestGetSnapshots:
                     content=content,
                     content_hash=Snapshot.hash_content(content),
                     status_code=200,
-                    timestamp=f"2024-01-0{i+1}T00:00:00",
+                    timestamp=f"2024-01-0{i + 1}T00:00:00",
                 )
             )
         result = storage.get_snapshots(target.id, limit=3)

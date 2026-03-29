@@ -19,6 +19,7 @@ class Storage:
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
         self._conn = sqlite3.connect(str(self.db_path))
         self._conn.row_factory = sqlite3.Row
+        self._conn.execute("PRAGMA foreign_keys = ON")
         self._init_db()
 
     def _init_db(self) -> None:
@@ -64,21 +65,15 @@ class Storage:
         return target
 
     def get_target_by_url(self, url: str) -> Target | None:
-        row = self._conn.execute(
-            "SELECT * FROM targets WHERE url = ?", (url,)
-        ).fetchone()
+        row = self._conn.execute("SELECT * FROM targets WHERE url = ?", (url,)).fetchone()
         return self._row_to_target(row) if row else None
 
     def get_target_by_id(self, target_id: int) -> Target | None:
-        row = self._conn.execute(
-            "SELECT * FROM targets WHERE id = ?", (target_id,)
-        ).fetchone()
+        row = self._conn.execute("SELECT * FROM targets WHERE id = ?", (target_id,)).fetchone()
         return self._row_to_target(row) if row else None
 
     def list_targets(self) -> list[Target]:
-        rows = self._conn.execute(
-            "SELECT * FROM targets ORDER BY created_at DESC"
-        ).fetchall()
+        rows = self._conn.execute("SELECT * FROM targets ORDER BY created_at DESC").fetchall()
         return [self._row_to_target(row) for row in rows]
 
     def remove_target(self, url: str) -> bool:
