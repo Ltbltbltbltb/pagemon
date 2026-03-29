@@ -6,12 +6,10 @@ import json
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
-import pytest
 from click.testing import CliRunner
 
 from pagemon.cli import cli
 from pagemon.models import CheckResult, CheckStatus, Snapshot, Target
-
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -65,7 +63,9 @@ class TestCliAdd:
 
     def test_should_print_interval_to_output(self, tmp_db: Path) -> None:
         runner = make_runner()
-        result = runner.invoke(cli, ["add", "https://example.com", "--interval", "60", "--db", str(tmp_db)])
+        result = runner.invoke(
+            cli, ["add", "https://example.com", "--interval", "60", "--db", str(tmp_db)]
+        )
         assert "60m" in result.output
 
     def test_should_print_selector_when_provided(self, tmp_db: Path) -> None:
